@@ -1,9 +1,18 @@
 {{ define "content" }}
 
-<ul>
-  <li>Task 1</li>
-  <li>Task 2</li>
-  <li>Task 3</li>
-</ul>
+<div class="row mb-2">
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        <a href="/tasks/new" role="button" class="btn btn-outline-info">タスク作成</a>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Cras justo odio</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 {{ end }}
