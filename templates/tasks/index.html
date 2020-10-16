@@ -1,18 +1,31 @@
 {{ define "content" }}
 
-<div class="row mb-2">
-  <div class="col">
-    <div class="card">
-      <div class="card-header">
-        <a href="/tasks/new" role="button" class="btn btn-outline-info">タスク作成</a>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Cras justo odio</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Vestibulum at eros</li>
-      </ul>
-    </div>
+<div class="card">
+  <div class="card-header">
+    <a href="/tasks/new" role="button" class="btn btn-outline-info">タスク作成</a>
   </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">CreatedAt</th>
+        <th scope="col">UpdatedAt</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range . }}
+      <tr>
+        <th scope="row">{{ .ID }}</th>
+        <td>{{ .Name }}</td>
+        <td>{{ .Description }}</td>
+        <td>{{ .CreatedAt }}</td>
+        <td>{{ .UpdatedAt }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
 </div>
 
 {{ end }}

@@ -7,13 +7,17 @@ import (
 )
 
 func handleTasks(w http.ResponseWriter, r *http.Request) {
+	tasks, err := data.Tasks()
+	if err != nil {
+		return
+	}
 	files := []string{
 		"templates/layout.html",
 		"templates/navbar.html",
 		"templates/tasks/index.html",
 	}
 	templates := template.Must(template.ParseFiles(files...))
-	templates.ExecuteTemplate(w, "layout", nil)
+	templates.ExecuteTemplate(w, "layout", tasks)
 }
 
 func handleNewTask(w http.ResponseWriter, r *http.Request) {
