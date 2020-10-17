@@ -14,5 +14,7 @@ func main() {
 	http.HandleFunc("/", handleTasks)
 	http.HandleFunc("/tasks/new", handleNewTask)
 	http.HandleFunc("/tasks/create", handleCreateTask)
+	http.HandleFunc("/tasks/edit", handleEditTask)
+	http.HandleFunc("/tasks/update", handleUpdateTask)
 	server.ListenAndServe()
 }

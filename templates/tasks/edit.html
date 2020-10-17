@@ -1,0 +1,18 @@
+{{ define "content" }}
+
+<h2>タスクの編集</h2>
+
+<form role="form" action="/tasks/update" method="POST">
+  <div class="form-group">
+    <label for="task_name">タスク</label>
+    <input type="text" class="form-control" id="task_name" name="task_name" placeholder="新しいタスク" value="{{ .Name }}">
+  </div>
+  <div class="form-group">
+    <label for="task_description">説明</label>
+    <input type="text" class="form-control" id="task_description" name="task_description" placeholder="説明を追加" value="{{ .Description }}">
+  </div>
+  <input type="hidden" name="task_id" value="{{ .ID }}">
+  <button type="submit" class="btn btn-primary">作成</button>
+</form>
+
+{{ end }}

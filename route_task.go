@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"strconv"
 	"todo/data"
 )
 
@@ -41,5 +42,48 @@ func handleCreateTask(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
+	http.Redirect(w, r, "/", 302)
+}
+
+func handleEditTask(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil {
+		return
+	}
+	task, err := data.FindTaskById(id)
+	if err != nil {
+		return
+	}
+	files := []string{
+		"templates/layout.html",
+		"templates/navbar.html",
+		"templates/tasks/edit.html",
+	}
+	templates := template.Must(template.ParseFiles(files...))
+	templates.ExecuteTemplate(w, "layout", task)
+}
+
+func handleUpdateTask(w http.ResponseWriter, r *http.Request) {
+	// formからname属性を取得
+	err := r.ParseForm()
+	if err != nil {
+		return
+	}
+	id, err := strconv.Atoi(r.PostFormValue("task_id"))
+	if err != nil {
+		return
+	}
+	name := r.PostFormValue("task_name")
+	description := r.PostFormValue("task_description")
+	task, err := data.FindTaskById(id)
+	if err != nil {
+		return
+	}
+
+	// taskを更新
+	task.Name = name
+	task.Description = description
+	task.Update()
+
 	http.Redirect(w, r, "/", 302)
 }
