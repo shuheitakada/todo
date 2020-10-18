@@ -45,3 +45,8 @@ func (task *Task) Update() (err error) {
 	_, err = Db.Exec("UPDATE tasks SET name = $2, description = $3, updated_at = $4 WHERE id = $1", task.ID, task.Name, task.Description, time.Now())
 	return
 }
+
+func (task *Task) Delete() (err error) {
+	_, err = Db.Exec("DELETE FROM tasks WHERE id = $1", task.ID)
+	return
+}

@@ -13,6 +13,7 @@
         <th scope="col">CreatedAt</th>
         <th scope="col">UpdatedAt</th>
         <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +26,9 @@
         <td>{{ .UpdatedAt }}</td>
         <td>
           <a href="/tasks/edit?id={{ .ID }}" role="button" class="btn btn-outline-primary">編集</a>
+        </td>
+        <td>
+          <a href="/tasks/delete?id={{ .ID }}" role="button" class="btn btn-outline-danger">削除</a>
         </td>
       </tr>
       {{ end }}

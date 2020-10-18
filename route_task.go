@@ -87,3 +87,17 @@ func handleUpdateTask(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/", 302)
 }
+
+func handleDeleteTask(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil {
+		return
+	}
+	task, err := data.FindTaskById(id)
+	if err != nil {
+		return
+	}
+	task.Delete()
+
+	http.Redirect(w, r, "/", 302)
+}
