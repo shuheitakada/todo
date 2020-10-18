@@ -50,3 +50,11 @@ func (task *Task) Delete() (err error) {
 	_, err = Db.Exec("DELETE FROM tasks WHERE id = $1", task.ID)
 	return
 }
+
+func (task *Task) CreatedAtDate() string {
+	return task.CreatedAt.Format("2006/1/2 15:04:05")
+}
+
+func (task *Task) UpdatedAtDate() string {
+	return task.UpdatedAt.Format("2006/1/2 15:04:05")
+}
