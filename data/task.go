@@ -2,30 +2,32 @@ package data
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Task struct {
-	ID          int
+	gorm.Model
 	Name        string
 	Description string
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
 }
 
 func Tasks() (tasks []Task, err error) {
-	rows, err := Db.Query("SELECT id, name, description, created_at, updated_at FROM tasks ORDER BY id ASC")
-	if err != nil {
-		return
-	}
-	for rows.Next() {
-		task := Task{}
-		err = rows.Scan(&task.ID, &task.Name, &task.Description, &task.CreatedAt, &task.UpdatedAt)
-		if err != nil {
-			return
-		}
-		tasks = append(tasks, task)
-	}
-	rows.Close()
+	result := Db.Find(&tasks)
+	err = result.Error
+	// rows, err := Db.Query("SELECT id, name, description, created_at, updated_at FROM tasks ORDER BY id ASC")
+	// if err != nil {
+	// 	return
+	// }
+	// for rows.Next() {
+	// 	task := Task{}
+	// 	err = rows.Scan(&task.ID, &task.Name, &task.Description, &task.CreatedAt, &task.UpdatedAt)
+	// 	if err != nil {
+	// 		return
+	// 	}
+	// 	tasks = append(tasks, task)
+	// }
+	// rows.Close()
 	return
 }
 
