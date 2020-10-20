@@ -44,7 +44,8 @@ func (task *Task) Update() (err error) {
 }
 
 func (task *Task) Delete() (err error) {
-	_, err = Db.Exec("DELETE FROM tasks WHERE id = $1", task.ID)
+	result := DbGorm.Delete(&task)
+	err = result.Error
 	return
 }
 
