@@ -7,12 +7,12 @@ import (
 	"gorm.io/driver/postgres"
 )
 
-var DbGorm *gorm.DB
+var Db *gorm.DB
 
 func init() {
 	var err error
 	dsn := "dbname=todo sslmode=disable"
-	DbGorm, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	Db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -13,38 +13,38 @@ type Task struct {
 }
 
 func Tasks() (tasks []Task, err error) {
-	result := DbGorm.Order("created_at asc").Find(&tasks)
+	result := Db.Order("created_at asc").Find(&tasks)
 	err = result.Error
 	return
 }
 
 func CreateTask(name string, description string) (task Task, err error) {
 	task = Task{
-		Name: name,
+		Name:        name,
 		Description: description,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
 	}
-	result := DbGorm.Create(&task)
+	result := Db.Create(&task)
 	err = result.Error
 	return
 }
 
 func FindTaskById(id string) (task Task, err error) {
-	result := DbGorm.Find(&task, id)
+	result := Db.Find(&task, id)
 	err = result.Error
 	return
 }
 
 func (task *Task) Update() (err error) {
 	task.UpdatedAt = time.Now()
-	result := DbGorm.Save(&task)
+	result := Db.Save(&task)
 	err = result.Error
 	return
 }
 
 func (task *Task) Delete() (err error) {
-	result := DbGorm.Delete(&task)
+	result := Db.Delete(&task)
 	err = result.Error
 	return
 }
