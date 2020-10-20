@@ -3,7 +3,6 @@ package main
 import (
 	"html/template"
 	"net/http"
-	"strconv"
 	"todo/data"
 )
 
@@ -46,10 +45,7 @@ func handleCreateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleEditTask(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.URL.Query().Get("id"))
-	if err != nil {
-		return
-	}
+	id := r.URL.Query().Get("id")
 	task, err := data.FindTaskById(id)
 	if err != nil {
 		return
@@ -69,10 +65,7 @@ func handleUpdateTask(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	id, err := strconv.Atoi(r.PostFormValue("task_id"))
-	if err != nil {
-		return
-	}
+	id := r.PostFormValue("task_id")
 	name := r.PostFormValue("task_name")
 	description := r.PostFormValue("task_description")
 	task, err := data.FindTaskById(id)
@@ -89,10 +82,7 @@ func handleUpdateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleDeleteTask(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.URL.Query().Get("id"))
-	if err != nil {
-		return
-	}
+	id := r.URL.Query().Get("id")
 	task, err := data.FindTaskById(id)
 	if err != nil {
 		return

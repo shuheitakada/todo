@@ -30,7 +30,7 @@ func CreateTask(name string, description string) (task Task, err error) {
 	return
 }
 
-func FindTaskById(id int) (task Task, err error) {
+func FindTaskById(id string) (task Task, err error) {
 	result := DbGorm.Find(&task, id)
 	err = result.Error
 	return
