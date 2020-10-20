@@ -31,8 +31,8 @@ func CreateTask(name string, description string) (task Task, err error) {
 }
 
 func FindTaskById(id int) (task Task, err error) {
-	task = Task{}
-	err = Db.QueryRow("SELECT id, name, description, created_at, updated_at FROM tasks WHERE id = $1", id).Scan(&task.ID, &task.Name, &task.Description, &task.CreatedAt, &task.UpdatedAt)
+	result := DbGorm.Find(&task, id)
+	err = result.Error
 	return
 }
 
