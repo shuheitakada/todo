@@ -19,8 +19,14 @@ func Tasks() (tasks []Task, err error) {
 }
 
 func CreateTask(name string, description string) (task Task, err error) {
-	task = Task{}
-	err = Db.QueryRow("INSERT INTO tasks (name, description, created_at, updated_at) values ($1, $2, $3, $4) returning id, name, description, created_at, updated_at", name, description, time.Now(), time.Now()).Scan(&task.ID, &task.Name, &task.Description, &task.CreatedAt, &task.UpdatedAt)
+	task = Task{
+		Name: name,
+		Description: description,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	result := DbGorm.Create(&task)
+	err = result.Error
 	return
 }
 
