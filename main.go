@@ -17,5 +17,7 @@ func main() {
 	http.HandleFunc("/tasks/edit", handleEditTask)
 	http.HandleFunc("/tasks/update", handleUpdateTask)
 	http.HandleFunc("/tasks/delete", handleDeleteTask)
+
+	http.HandleFunc("/login", handleLogin)
 	server.ListenAndServe()
 }
