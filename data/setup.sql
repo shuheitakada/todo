@@ -1,20 +1,20 @@
-drop table tasks;
-drop table users;
+DROP TABLE tasks;
+DROP TABLE users;
 
-create table tasks (
-  id          serial primary key,
-  name        varchar(255) not null,
+CREATE TABLE tasks (
+  id          serial PRIMARY KEY,
+  name        varchar(255) NOT NULL,
   description text,
-  created_at  timestamp not null,
-  updated_at  timestamp not null
+  created_at  timestamp NOT NULL,
+  updated_at  timestamp NOT NULL
 );
 
-create table users (
-  id serial primary key,
-  name varchar(255),
-  email varchar(255) not null,
-  crypted_password varchar(255) not null,
-  salt varchar(255) not null,
-  created_at  timestamp not null,
-  updated_at  timestamp not null
+CREATE TABLE users (
+  id               serial PRIMARY KEY,
+  name             varchar(255),
+  email            varchar(255) NOT NULL,
+  crypted_password varchar(255) NOT NULL,
+  salt             varchar(255) NOT NULL,
+  created_at       timestamp NOT NULL,
+  updated_at       timestamp NOT NULL
 );
