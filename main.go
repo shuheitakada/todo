@@ -19,5 +19,6 @@ func main() {
 	http.HandleFunc("/tasks/delete", handleDeleteTask)
 
 	http.HandleFunc("/login", handleLogin)
+	http.HandleFunc("/signup", handleSignup)
 	server.ListenAndServe()
 }
