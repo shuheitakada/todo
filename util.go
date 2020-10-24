@@ -5,9 +5,9 @@ import (
 )
 
 func cryptePassword(password string) (string, error) {
-	cryptedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
 	}
-	return string(cryptedPassword), nil
+	return string(hash), nil
 }
