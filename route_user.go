@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"todo/data"
@@ -30,9 +31,14 @@ func handleSignup(w http.ResponseWriter, r *http.Request) {
 		if err := r.ParseForm(); err != nil {
 			return
 		}
+		password, err := cryptePassword(r.PostFormValue("password"))
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 		user := data.User{
-			Email: r.PostFormValue("email"),
-			CryptedPassword: r.PostFormValue("password"),
+			Email:           r.PostFormValue("email"),
+			CryptedPassword: password,
 		}
 		if err := user.Create(); err != nil {
 			return
