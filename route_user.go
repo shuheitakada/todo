@@ -8,13 +8,47 @@ import (
 )
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
-	files := []string{
-		"templates/layout.html",
-		"templates/navbar.html",
-		"templates/users/login.html",
+	switch r.Method {
+	case "GET":
+		files := []string{
+			"templates/layout.html",
+			"templates/navbar.html",
+			"templates/users/login.html",
+		}
+		templates := template.Must(template.ParseFiles(files...))
+		templates.ExecuteTemplate(w, "layout", nil)
+	case "POST":
+		if err := r.ParseForm(); err != nil {
+			fmt.Println(err)
+			return
+		}
+		email := r.PostFormValue("email")
+		password := r.PostFormValue("password")
+		user, err := data.FindUserByEmail(email)
+		if err != nil {
+			fmt.Println("メールアドレスが間違っています")
+			http.Redirect(w, r, "/login", 302)
+			return
+		}
+		if err := user.Authenticate(password); err != nil {
+			fmt.Println("パスワードが間違っています")
+			http.Redirect(w, r, "/login", 302)
+			return
+		}
+		fmt.Println("ログインに成功しました")
+		session, err := user.CreateSession()
+		if err != nil {
+			fmt.Println("セッションの作成に失敗しました")
+			return
+		}
+		cookie := http.Cookie{
+			Name: "sessionId",
+			Value: session.Uuid,
+			HttpOnly: true,
+		}
+		http.SetCookie(w, &cookie)
+		http.Redirect(w, r, "/", 302)
 	}
-	templates := template.Must(template.ParseFiles(files...))
-	templates.ExecuteTemplate(w, "layout", nil)
 }
 
 func handleSignup(w http.ResponseWriter, r *http.Request) {

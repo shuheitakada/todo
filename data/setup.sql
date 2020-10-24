@@ -1,5 +1,6 @@
 DROP TABLE tasks;
 DROP TABLE users;
+DROP TABLE sessions;
 
 CREATE TABLE tasks (
   id          serial PRIMARY KEY,
@@ -16,9 +17,17 @@ INSERT INTO tasks (name, description, created_at, updated_at) VALUES ('タスク
 CREATE TABLE users (
   id               serial PRIMARY KEY,
   name             varchar(255),
-  email            varchar(255) NOT NULL,
+  email            varchar(255) NOT NULL UNIQUE,
   crypted_password varchar(255) NOT NULL,
   salt             varchar(255) NOT NULL,
   created_at       timestamp NOT NULL,
   updated_at       timestamp NOT NULL
 );
+
+CREATE TABLE sessions (
+  id         serial PRIMARY KEY,
+  uuid       varchar(255) NOT NULL UNIQUE,
+  user_id    integer REFERENCES users(id),
+  created_at timestamp NOT NULL,
+  updated_at timestamp NOT NULL
+)
