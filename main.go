@@ -20,5 +20,7 @@ func main() {
 
 	http.HandleFunc("/login", handleLogin)
 	http.HandleFunc("/signup", handleSignup)
+
+	http.HandleFunc("/favicon.ico", doNothing)
 	server.ListenAndServe()
 }
