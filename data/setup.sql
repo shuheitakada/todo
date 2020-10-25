@@ -1,6 +1,6 @@
 DROP TABLE tasks;
-DROP TABLE users;
 DROP TABLE sessions;
+DROP TABLE users;
 
 CREATE TABLE tasks (
   id          serial PRIMARY KEY,
