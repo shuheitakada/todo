@@ -12,7 +12,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		files := []string{
 			"templates/layout.html",
-			"templates/navbar.html",
+			"templates/public.navbar.html",
 			"templates/users/login.html",
 		}
 		templates := template.Must(template.ParseFiles(files...))
@@ -56,7 +56,7 @@ func handleSignup(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		files := []string{
 			"templates/layout.html",
-			"templates/navbar.html",
+			"templates/public.navbar.html",
 			"templates/users/signup.html",
 		}
 		templates := template.Must(template.ParseFiles(files...))

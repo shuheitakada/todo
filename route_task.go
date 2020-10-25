@@ -13,7 +13,7 @@ func handleTasks(w http.ResponseWriter, r *http.Request) {
 	}
 	files := []string{
 		"templates/layout.html",
-		"templates/navbar.html",
+		"templates/public.navbar.html",
 		"templates/tasks/index.html",
 	}
 	templates := template.Must(template.ParseFiles(files...))
@@ -23,7 +23,7 @@ func handleTasks(w http.ResponseWriter, r *http.Request) {
 func handleNewTask(w http.ResponseWriter, r *http.Request) {
 	files := []string{
 		"templates/layout.html",
-		"templates/navbar.html",
+		"templates/public.navbar.html",
 		"templates/tasks/new.html",
 	}
 	templates := template.Must(template.ParseFiles(files...))
@@ -52,7 +52,7 @@ func handleEditTask(w http.ResponseWriter, r *http.Request) {
 	}
 	files := []string{
 		"templates/layout.html",
-		"templates/navbar.html",
+		"templates/public.navbar.html",
 		"templates/tasks/edit.html",
 	}
 	templates := template.Must(template.ParseFiles(files...))
