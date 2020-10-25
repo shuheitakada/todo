@@ -48,3 +48,9 @@ func FindSessionByUuid(uuid string) (session Session, err error) {
 	err = result.Error
 	return
 }
+
+func (session *Session) Delete() (err error) {
+	result := Db.Delete(&session)
+	err = result.Error
+	return
+}

@@ -45,13 +45,21 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleLogout(w http.ResponseWriter, r *http.Request) {
-	session, err := r.Cookie("sessionId")
+	cookie, err := r.Cookie("sessionId")
 	if err != nil {
-		fmt.Println("セッションの読み取りエラー")
-		return
+		fmt.Println("すでにログアウトしています")
+	} else {
+		// DB側のセッションを削除
+		session, err := data.FindSessionByUuid(cookie.Value)
+		if err != nil {
+			fmt.Println("セッションの取得エラー")
+			return
+		}
+		session.Delete()
+		// クライアント側のセッションを削除
+		cookie.MaxAge = -1
+		http.SetCookie(w, cookie)
 	}
-	session.MaxAge = -1
-	http.SetCookie(w, session)
 	http.Redirect(w, r, "/", 302)
 }
 
