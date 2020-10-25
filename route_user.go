@@ -9,7 +9,7 @@ import (
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		generateHTML(w, nil, "layout", "public.navbar", "users/login")
+		generateHTML(w, r, nil, "layout", "users/login")
 	case "POST":
 		if err := r.ParseForm(); err != nil {
 			fmt.Println(err)
@@ -44,10 +44,21 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func handleLogout(w http.ResponseWriter, r *http.Request) {
+	session, err := r.Cookie("sessionId")
+	if err != nil {
+		fmt.Println("セッションの読み取りエラー")
+		return
+	}
+	session.MaxAge = -1
+	http.SetCookie(w, session)
+	http.Redirect(w, r, "/", 302)
+}
+
 func handleSignup(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		generateHTML(w, nil, "layout", "public.navbar", "users/signup")
+		generateHTML(w, r, nil, "layout", "users/signup")
 	case "POST":
 		if err := r.ParseForm(); err != nil {
 			return

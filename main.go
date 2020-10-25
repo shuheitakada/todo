@@ -19,6 +19,7 @@ func main() {
 	http.HandleFunc("/tasks/delete", handleDeleteTask)
 
 	http.HandleFunc("/login", handleLogin)
+	http.HandleFunc("/logout", handleLogout)
 	http.HandleFunc("/signup", handleSignup)
 
 	http.HandleFunc("/favicon.ico", doNothing)

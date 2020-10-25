@@ -15,11 +15,20 @@ func cryptePassword(password string) (string, error) {
 	return string(hash), nil
 }
 
-func generateHTML(w http.ResponseWriter, data interface{}, filenames ...string) {
+func generateHTML(w http.ResponseWriter, r *http.Request, data interface{}, filenames ...string) {
 	var files []string
 	for _, filename := range filenames {
 		files = append(files, "templates/"+filename+".html")
 	}
+	_, err := r.Cookie("sessionId")
+	if err == nil {
+		// セッションが存在するとき、つまりログインしているとき
+		files = append(files, "templates/private.navbar.html")
+	} else {
+		// セッションが存在しないとき、つまりログインしていないとき
+		files = append(files, "templates/public.navbar.html")
+	}
 	templates := template.Must(template.ParseFiles(files...))
 	templates.ExecuteTemplate(w, filenames[0], data)
 }
+

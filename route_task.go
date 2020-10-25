@@ -10,11 +10,11 @@ func handleTasks(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	generateHTML(w, tasks, "layout", "public.navbar", "tasks/index")
+	generateHTML(w, r, tasks, "layout", "tasks/index")
 }
 
 func handleNewTask(w http.ResponseWriter, r *http.Request) {
-	generateHTML(w, nil, "layout", "public.navbar", "tasks/new")
+	generateHTML(w, r, nil, "layout", "tasks/new")
 }
 
 func handleCreateTask(w http.ResponseWriter, r *http.Request) {
@@ -37,7 +37,7 @@ func handleEditTask(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	generateHTML(w, task, "layout", "public.navbar", "tasks/edit")
+	generateHTML(w, r, task, "layout", "tasks/edit")
 }
 
 func handleUpdateTask(w http.ResponseWriter, r *http.Request) {
