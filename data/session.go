@@ -42,3 +42,9 @@ func createUUID() (uuid string) {
 	uuid = fmt.Sprintf("%x-%x-%x-%x-%x", u[0:4], u[4:6], u[6:8], u[8:10], u[10:])
 	return
 }
+
+func FindSessionByUuid(uuid string) (session Session, err error) {
+	result := Db.Where("uuid = ?", uuid).First(&session)
+	err = result.Error
+	return
+}

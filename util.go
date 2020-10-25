@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
+	"todo/data"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -32,3 +34,15 @@ func generateHTML(w http.ResponseWriter, r *http.Request, data interface{}, file
 	templates.ExecuteTemplate(w, filenames[0], data)
 }
 
+func getSession(r *http.Request) (session data.Session, err error) {
+	sess, err := r.Cookie("sessionId")
+	if err == nil {
+		// セッションが存在するとき
+		session, err = data.FindSessionByUuid(sess.Value)
+		if err != nil {
+			fmt.Println("セッションの取得エラー", err)
+			return
+		}
+	}
+	return
+}

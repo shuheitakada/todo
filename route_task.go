@@ -6,69 +6,99 @@ import (
 )
 
 func handleTasks(w http.ResponseWriter, r *http.Request) {
-	tasks, err := data.Tasks()
+	_, err := getSession(r)
 	if err != nil {
-		return
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		tasks, err := data.Tasks()
+		if err != nil {
+			return
+		}
+		generateHTML(w, r, tasks, "layout", "tasks/index")
 	}
-	generateHTML(w, r, tasks, "layout", "tasks/index")
 }
 
 func handleNewTask(w http.ResponseWriter, r *http.Request) {
-	generateHTML(w, r, nil, "layout", "tasks/new")
+	_, err := getSession(r)
+	if err != nil {
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		generateHTML(w, r, nil, "layout", "tasks/new")
+	}
 }
 
 func handleCreateTask(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
+	_, err := getSession(r)
 	if err != nil {
-		return
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		err := r.ParseForm()
+		if err != nil {
+			return
+		}
+		name := r.PostFormValue("task_name")
+		description := r.PostFormValue("task_description")
+		_, err = data.CreateTask(name, description)
+		if err != nil {
+			return
+		}
+		http.Redirect(w, r, "/", 302)
 	}
-	name := r.PostFormValue("task_name")
-	description := r.PostFormValue("task_description")
-	_, err = data.CreateTask(name, description)
-	if err != nil {
-		return
-	}
-	http.Redirect(w, r, "/", 302)
 }
 
 func handleEditTask(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
-	task, err := data.FindTaskById(id)
+	_, err := getSession(r)
 	if err != nil {
-		return
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		id := r.URL.Query().Get("id")
+		task, err := data.FindTaskById(id)
+		if err != nil {
+			return
+		}
+		generateHTML(w, r, task, "layout", "tasks/edit")
 	}
-	generateHTML(w, r, task, "layout", "tasks/edit")
 }
 
 func handleUpdateTask(w http.ResponseWriter, r *http.Request) {
-	// formからname属性を取得
-	err := r.ParseForm()
+	_, err := getSession(r)
 	if err != nil {
-		return
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		// formからname属性を取得
+		err := r.ParseForm()
+		if err != nil {
+			return
+		}
+		id := r.PostFormValue("task_id")
+		name := r.PostFormValue("task_name")
+		description := r.PostFormValue("task_description")
+		task, err := data.FindTaskById(id)
+		if err != nil {
+			return
+		}
+	
+		// taskを更新
+		task.Name = name
+		task.Description = description
+		task.Update()
+	
+		http.Redirect(w, r, "/", 302)
 	}
-	id := r.PostFormValue("task_id")
-	name := r.PostFormValue("task_name")
-	description := r.PostFormValue("task_description")
-	task, err := data.FindTaskById(id)
-	if err != nil {
-		return
-	}
-
-	// taskを更新
-	task.Name = name
-	task.Description = description
-	task.Update()
-
-	http.Redirect(w, r, "/", 302)
 }
 
 func handleDeleteTask(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
-	task, err := data.FindTaskById(id)
+	_, err := getSession(r)
 	if err != nil {
-		return
+		http.Redirect(w, r, "/login", 302)
+	} else {
+		id := r.URL.Query().Get("id")
+		task, err := data.FindTaskById(id)
+		if err != nil {
+			return
+		}
+		task.Delete()
+	
+		http.Redirect(w, r, "/", 302)
 	}
-	task.Delete()
-
-	http.Redirect(w, r, "/", 302)
 }
