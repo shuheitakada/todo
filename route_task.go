@@ -1,7 +1,6 @@
 package main
 
 import (
-	"html/template"
 	"net/http"
 	"todo/data"
 )
@@ -11,23 +10,11 @@ func handleTasks(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	files := []string{
-		"templates/layout.html",
-		"templates/public.navbar.html",
-		"templates/tasks/index.html",
-	}
-	templates := template.Must(template.ParseFiles(files...))
-	templates.ExecuteTemplate(w, "layout", tasks)
+	generateHTML(w, tasks, "layout", "public.navbar", "tasks/index")
 }
 
 func handleNewTask(w http.ResponseWriter, r *http.Request) {
-	files := []string{
-		"templates/layout.html",
-		"templates/public.navbar.html",
-		"templates/tasks/new.html",
-	}
-	templates := template.Must(template.ParseFiles(files...))
-	templates.ExecuteTemplate(w, "layout", nil)
+	generateHTML(w, nil, "layout", "public.navbar", "tasks/new")
 }
 
 func handleCreateTask(w http.ResponseWriter, r *http.Request) {
@@ -50,13 +37,7 @@ func handleEditTask(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	files := []string{
-		"templates/layout.html",
-		"templates/public.navbar.html",
-		"templates/tasks/edit.html",
-	}
-	templates := template.Must(template.ParseFiles(files...))
-	templates.ExecuteTemplate(w, "layout", task)
+	generateHTML(w, task, "layout", "public.navbar", "tasks/edit")
 }
 
 func handleUpdateTask(w http.ResponseWriter, r *http.Request) {

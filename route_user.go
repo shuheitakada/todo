@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 	"todo/data"
 )
@@ -10,13 +9,7 @@ import (
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		files := []string{
-			"templates/layout.html",
-			"templates/public.navbar.html",
-			"templates/users/login.html",
-		}
-		templates := template.Must(template.ParseFiles(files...))
-		templates.ExecuteTemplate(w, "layout", nil)
+		generateHTML(w, nil, "layout", "public.navbar", "users/login")
 	case "POST":
 		if err := r.ParseForm(); err != nil {
 			fmt.Println(err)
@@ -42,8 +35,8 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		cookie := http.Cookie{
-			Name: "sessionId",
-			Value: session.Uuid,
+			Name:     "sessionId",
+			Value:    session.Uuid,
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)
@@ -54,13 +47,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 func handleSignup(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		files := []string{
-			"templates/layout.html",
-			"templates/public.navbar.html",
-			"templates/users/signup.html",
-		}
-		templates := template.Must(template.ParseFiles(files...))
-		templates.ExecuteTemplate(w, "layout", nil)
+		generateHTML(w, nil, "layout", "public.navbar", "users/signup")
 	case "POST":
 		if err := r.ParseForm(); err != nil {
 			return
