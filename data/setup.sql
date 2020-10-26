@@ -16,7 +16,7 @@ CREATE TABLE tasks (
   id          serial PRIMARY KEY,
   name        varchar(255) NOT NULL,
   description text,
-  user_id     integer REFERENCES users(id),
+  user_id     integer REFERENCES users(id) NOT NULL,
   created_at  timestamp NOT NULL,
   updated_at  timestamp NOT NULL
 );
@@ -24,7 +24,7 @@ CREATE TABLE tasks (
 CREATE TABLE sessions (
   id         serial PRIMARY KEY,
   uuid       varchar(255) NOT NULL UNIQUE,
-  user_id    integer REFERENCES users(id),
+  user_id    integer REFERENCES users(id) NOT NULL,
   created_at timestamp NOT NULL,
   updated_at timestamp NOT NULL
 )
