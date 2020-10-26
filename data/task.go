@@ -13,8 +13,8 @@ type Task struct {
 	UpdatedAt   time.Time
 }
 
-func Tasks() (tasks []Task, err error) {
-	result := Db.Order("created_at asc").Find(&tasks)
+func (user *User) Tasks() (tasks []Task, err error) {
+	result := Db.Where("user_id", user.ID).Order("created_at asc").Find(&tasks)
 	err = result.Error
 	return
 }

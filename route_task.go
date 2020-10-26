@@ -7,11 +7,16 @@ import (
 )
 
 func handleTasks(w http.ResponseWriter, r *http.Request) {
-	_, err := getSession(r)
+	session, err := getSession(r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
-		tasks, err := data.Tasks()
+		user, err := data.FindUserById(session.UserID)
+		if err != nil {
+			fmt.Println("User not found")
+			return
+		}
+		tasks, err := user.Tasks()
 		if err != nil {
 			return
 		}
