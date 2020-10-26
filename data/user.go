@@ -28,6 +28,12 @@ func FindUserByEmail(email string) (user User, err error) {
 	return
 }
 
+func FindUserById(id int) (user User, err error) {
+	result := Db.First(&user, id)
+	err = result.Error
+	return
+}
+
 func (user *User) Authenticate(password string) (err error) {
 	err = bcrypt.CompareHashAndPassword([]byte(user.CryptedPassword), []byte(password))
 	return

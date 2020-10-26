@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"todo/data"
 )
@@ -28,7 +29,7 @@ func handleNewTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCreateTask(w http.ResponseWriter, r *http.Request) {
-	_, err := getSession(r)
+	session, err := getSession(r)
 	if err != nil {
 		http.Redirect(w, r, "/login", 302)
 	} else {
@@ -38,7 +39,13 @@ func handleCreateTask(w http.ResponseWriter, r *http.Request) {
 		}
 		name := r.PostFormValue("task_name")
 		description := r.PostFormValue("task_description")
-		_, err = data.CreateTask(name, description)
+		userID := session.UserId
+		user, err := data.FindUserById(userID)
+		if err != nil {
+			fmt.Println("User not found")
+			return
+		}
+		err = user.CreateTask(name, description)
 		if err != nil {
 			return
 		}
@@ -77,12 +84,12 @@ func handleUpdateTask(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		}
-	
+
 		// taskを更新
 		task.Name = name
 		task.Description = description
 		task.Update()
-	
+
 		http.Redirect(w, r, "/", 302)
 	}
 }
@@ -98,7 +105,7 @@ func handleDeleteTask(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		task.Delete()
-	
+
 		http.Redirect(w, r, "/", 302)
 	}
 }
