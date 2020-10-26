@@ -36,7 +36,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 		}
 		cookie := http.Cookie{
 			Name:     "sessionId",
-			Value:    session.Uuid,
+			Value:    session.UUID,
 			HttpOnly: true,
 		}
 		http.SetCookie(w, &cookie)
