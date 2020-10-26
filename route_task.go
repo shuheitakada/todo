@@ -39,7 +39,7 @@ func handleCreateTask(w http.ResponseWriter, r *http.Request) {
 		}
 		name := r.PostFormValue("task_name")
 		description := r.PostFormValue("task_description")
-		userID := session.UserId
+		userID := session.UserID
 		user, err := data.FindUserById(userID)
 		if err != nil {
 			fmt.Println("User not found")

@@ -8,7 +8,7 @@ type Task struct {
 	ID          int
 	Name        string
 	Description string
-	UserId      int
+	UserID      int
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
@@ -23,7 +23,7 @@ func (user *User) CreateTask(name string, description string) (err error) {
 	task := Task{
 		Name:        name,
 		Description: description,
-		UserId:      user.ID,
+		UserID:      user.ID,
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 	}

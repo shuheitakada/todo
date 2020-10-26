@@ -10,7 +10,7 @@ import (
 type Session struct {
 	ID        int
 	UUID      string
-	UserId    int
+	UserID    int
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -18,7 +18,7 @@ type Session struct {
 func (user *User) CreateSession() (session Session, err error) {
 	session = Session{
 		UUID:   createUUID(),
-		UserId: user.ID,
+		UserID: user.ID,
 	}
 	result := Db.Create(&session)
 	err = result.Error
