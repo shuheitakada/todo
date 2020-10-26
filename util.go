@@ -35,10 +35,10 @@ func generateHTML(w http.ResponseWriter, r *http.Request, data interface{}, file
 }
 
 func getSession(r *http.Request) (session data.Session, err error) {
-	sess, err := r.Cookie("sessionId")
+	cookie, err := r.Cookie("sessionId")
 	if err == nil {
 		// セッションが存在するとき
-		session, err = data.FindSessionByUuid(sess.Value)
+		session, err = data.FindSessionByUuid(cookie.Value)
 		if err != nil {
 			fmt.Println("セッションの取得エラー", err)
 			return
