@@ -28,7 +28,7 @@ func FindUserByEmail(email string) (user User, err error) {
 	return
 }
 
-func FindUserById(id int) (user User, err error) {
+func FindUserById(id interface{}) (user User, err error) {
 	result := Db.First(&user, id)
 	err = result.Error
 	return

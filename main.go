@@ -22,6 +22,8 @@ func main() {
 	http.HandleFunc("/logout", handleLogout)
 	http.HandleFunc("/signup", handleSignup)
 
+	http.HandleFunc("/api/v1/tasks", handleApiTasks)
+
 	http.HandleFunc("/favicon.ico", doNothing)
 	server.ListenAndServe()
 }
