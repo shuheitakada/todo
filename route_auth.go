@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"todo/data"
 )
@@ -28,7 +29,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/login", 302)
 			return
 		}
-		fmt.Println("ログインに成功しました")
+		log.Println("ログインに成功しました")
 		session, err := user.CreateSession()
 		if err != nil {
 			fmt.Println("セッションの作成に失敗しました")
