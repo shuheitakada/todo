@@ -1,2 +1,2 @@
 # todo
-todo application written by go
+Goで作成したTODOアプリ
